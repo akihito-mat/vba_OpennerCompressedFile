@@ -3,8 +3,8 @@ Sub UnZipTest()
     Dim sExpandPath As String
     Dim bResult     As Boolean
     
-    sZipPath = "C:\aaaa\bbb\cc.zip"
-    sExpandPath = "C:\aaaa\test"
+    sZipPath = "./.zip"
+    sExpandPath = "./"
     
     bResult = UnZip(sZipPath, sExpandPath)
     
