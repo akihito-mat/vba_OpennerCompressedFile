@@ -1,0 +1,35 @@
+Function UnZip(a_sZipPath As String, a_sExpandPath As String) As Boolean
+    Dim sh      As New IWshRuntimeLibrary.WshShell
+    Dim ex      As WshExec
+    Dim sCmd    As String
+    
+    '// 半角スペースをバッククォートでエスケープ
+    a_sZipPath = Replace(a_sZipPath, " ", "` ")
+    a_sExpandPath = Replace(a_sExpandPath, " ", "` ")
+    
+    '// Expand-Archive：解凍コマンド
+    '// -Path：フォルダパスまたはファイルパスを指定する。
+    '// -DestinationPath：生成ファイルパスを指定する。
+    '// -Force：生成ファイルが既に存在している場合は上書きする
+    sCmd = "Expand-Archive -Path " & a_sZipPath & " -DestinationPath " & a_sExpandPath & " -Force"
+    
+    '// コマンド実行
+    Set ex = sh.Exec("powershell -NoLogo -ExecutionPolicy RemoteSigned -Command " & sCmd)
+    
+    '// コマンド失敗時
+    If ex.Status = WshFailed Then
+        '// 戻り値に異常を返す
+        UnZip = False
+        
+        '// 処理を抜ける
+        Exit Function
+    End If
+    
+    '// コマンド実行中は待ち
+    Do While ex.Status = WshRunning
+        DoEvents
+    Loop
+    
+    '// 戻り値に正常を返す
+    UnZip = True
+End Function
