@@ -1,0 +1,16 @@
+Sub UnZipTest()
+    Dim sZipPath    As String
+    Dim sExpandPath As String
+    Dim bResult     As Boolean
+    
+    sZipPath = "C:\aaaa\bbb\cc.zip"
+    sExpandPath = "C:\aaaa\test"
+    
+    bResult = UnZip(sZipPath, sExpandPath)
+    
+    If bResult = True Then
+        Call MsgBox("解凍しました。" & vbCr & sExpandPath, vbOKOnly, "解凍完了")
+    Else
+        Call MsgBox("解凍失敗しました。" & vbCr & sZipPath, vbOKOnly, "解凍失敗")
+    End If
+End Sub
